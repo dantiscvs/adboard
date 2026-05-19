@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme tokens ──────────────────────────────────────────────────────────── */
+:root {
+  --bg:      #f4f6fb;
+  --surface: #ffffff;
+  --card:    #f8fafc;
+  --elevated:#eef2f8;
+  --bdr:     #e2e8f0;
+  --bdr2:    #cbd5e1;
+  --input:   #ffffff;
+  --text:    #0f172a;
+  --text2:   #475569;
+  --muted:   #64748b;
+  /* HireAds brand tokens — must be present in both themes */
+  --brand:       #5B4AE8;
+  --brand-light: #7B6FF0;
+  --accent:      #F5AC00;
+}
+
+html.dark {
+  --bg:      #090910;
+  --surface: #0e0e1a;
+  --card:    #121220;
+  --elevated:#1a1a2c;
+  --bdr:     #1e1e32;
+  --bdr2:    #2a2a42;
+  --input:   #090910;
+  --text:    #e2e8f0;
+  --text2:   #94a3b8;
+  --muted:   #475569;
+  /* HireAds brand tokens */
+  --brand:   #5B4AE8;
+  --brand-light: #7B6FF0;
+  --accent:  #F5AC00;
+}
+
+@layer base {
+  * {
+    border-color: var(--bdr);
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--bdr2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
+  }
+}
+
+/* ── Light-mode: boost Tailwind gray utilities for readability ──────────────── */
+/* Specificity (0,1,1) overrides Tailwind's (0,0,1) only when html is NOT dark  */
+/* Gray text — boost contrast on light backgrounds */
+html:not(.dark) .text-gray-300 { color: #94a3b8; }
+html:not(.dark) .text-gray-400 { color: #64748b; }
+html:not(.dark) .text-gray-500 { color: #475569; }
+html:not(.dark) .text-gray-600 { color: #334155; }
+html:not(.dark) .text-gray-700 { color: #1e293b; }
+
+/* Purple accent text — make readable on light bg */
+html:not(.dark) .text-purple-300 { color: #6d28d9; }
+html:not(.dark) .text-purple-400 { color: #7c3aed; }
+
+/* Light-mode: prevent stray hard-coded dark surfaces */
+html:not(.dark) .bg-theme-bg   { background-color: var(--bg); }
+
+@layer components {
+  .btn-primary {
+    @apply text-white font-medium px-4 py-2 rounded-lg transition-colors duration-150 text-sm;
+    background: var(--brand);
+  }
+  .btn-primary:hover {
+    background: var(--brand-light);
+  }
+  .btn-secondary {
+    @apply font-medium px-4 py-2 rounded-lg transition-colors duration-150 text-sm;
+    background: var(--elevated);
+    border: 1px solid var(--bdr2);
+    color: var(--text);
+  }
+  .btn-secondary:hover {
+    background: var(--bdr);
+  }
+  .btn-ghost {
+    @apply font-medium px-4 py-2 rounded-lg transition-colors duration-150 text-sm;
+    color: var(--text2);
+  }
+  .btn-ghost:hover {
+    background: var(--elevated);
+    color: var(--text);
+  }
+  .card {
+    @apply rounded-xl p-5;
+    background: var(--card);
+    border: 1px solid var(--bdr);
+  }
+  .input {
+    @apply w-full rounded-lg px-3 py-2 text-sm placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all;
+    background: var(--input);
+    border: 1px solid var(--bdr2);
+    color: var(--text);
+  }
+  .label {
+    @apply block text-xs font-medium mb-1.5 uppercase tracking-wide;
+    color: var(--text2);
+  }
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+}

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /ads
+Disallow: /campaigns
+Disallow: /ats
+Disallow: /account
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://hireads.app/sitemap.xml
