@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore, useThemeStore } from '../store'
 import ChatBot from './ChatBot'
+import FirstRunOnboarding from './FirstRunOnboarding'
 import {
   LayoutDashboard, Image, Megaphone, LogOut, Menu, X, Crown, UserCircle, BarChart2, Sun, Moon, Users
 } from 'lucide-react'
@@ -21,6 +22,9 @@ export default function Layout({ children }) {
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { dark, toggle } = useThemeStore()
+  const [showOnboarding, setShowOnboarding] = useState(
+    () => !localStorage.getItem('hireads_onboarded')
+  )
 
   // Keep html class in sync with store
   useEffect(() => {
@@ -30,6 +34,10 @@ export default function Layout({ children }) {
   function handleLogout() {
     logout()
     navigate('/')
+  }
+
+  if (showOnboarding) {
+    return <FirstRunOnboarding onDone={() => setShowOnboarding(false)} />
   }
 
   return (
