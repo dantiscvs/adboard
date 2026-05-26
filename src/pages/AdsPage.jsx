@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect, useTransition } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
@@ -193,6 +193,7 @@ export default function AdsPage() {
   const importAd = useAdStore(s => s.importAd)
   const brandKit = useBrandKitStore()
 
+  const [isPending, startTransition] = useTransition()
   const [view, setView] = useState('list')
   const [editingAd, setEditingAd] = useState(null)
   const [form, setForm] = useState(EMPTY_AD)
@@ -848,11 +849,12 @@ export default function AdsPage() {
   // Base creative element (1080×1080 template, no format wrapper)
   const baseCreative = <SelectedTemplate ad={form} />
 
-  // Format-wrapped creatives for platform preview
+  // Format-wrapped creatives for platform preview — no animated prop here,
+  // animated style tags re-inject on every render and freeze the browser during design interactions
   const creatives = {
     square:    <SelectedTemplate ad={form} />,
-    vertical:  <FormatWrapper ad={form} format="vertical" animated><SelectedTemplate ad={form} /></FormatWrapper>,
-    landscape: <FormatWrapper ad={form} format="landscape" animated><SelectedTemplate ad={form} /></FormatWrapper>,
+    vertical:  <FormatWrapper ad={form} format="vertical"><SelectedTemplate ad={form} /></FormatWrapper>,
+    landscape: <FormatWrapper ad={form} format="landscape"><SelectedTemplate ad={form} /></FormatWrapper>,
   }
   const qualMeta = scoreColor(qualScore)
 
